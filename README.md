@@ -1,11 +1,12 @@
 # Fraud Risk Prioritization & Operational Analytics
 
 **Animesh Choubey** | MSBA, Cal State East Bay
-`Python` &nbsp;`SQL / BigQuery` &nbsp;`LightGBM` &nbsp;`NetworkX` &nbsp;`pandas` &nbsp;`scikit-learn`
+
+`Python` `SQL / BigQuery` `LightGBM` `NetworkX` `pandas` `scikit-learn`
 
 ---
 
-## 📂 [→ Open the Business Narrative Notebook](./Fraud_Risk_Analytics_Business_Narrative.ipynb)
+## [Open the Business Narrative Notebook](./00_master_business_walkthrough.ipynb)
 
 *Start here. Full analytical story — problem, approach, fraud ring detection, SQL, cost model, and recommendation.*
 
@@ -39,10 +40,10 @@ Four questions a fraud operations team actually cares about:
 ## Repo Structure
 
 ```
-fraud-risk-analytics/
+fraud-risk-prioritization-analytics/
 |
 +-- README.md
-+-- Fraud_Risk_Analytics_Business_Narrative.ipynb   <- Start here
++-- 00_master_business_walkthrough.ipynb        <- Start here
 |
 +-- technical-notebooks/
     +-- 01_EDA_and_Preprocessing.ipynb
@@ -74,6 +75,7 @@ fraud-risk-analytics/
 ## SQL Demonstrated
 
 Five production-style BigQuery queries:
+
 - Daily ops monitoring — did flag volume spike overnight?
 - Analyst review queue — ranked, priority-tiered, ready to work
 - Precision by score band — stakeholder-readable performance table
@@ -86,7 +88,7 @@ Five production-style BigQuery queries:
 
 **Individual signals hit a ceiling.** After iterative feature engineering across 5 model versions, the tabular model plateaued at PR-AUC ~0.40. More individual-transaction features produced diminishing returns.
 
-**Graph analysis changed the problem.** Mapping cards, devices, and email domains as a network made coordinated fraud rings visible. The fraud-neighbour ratio — what fraction of an entity's connections are confirmed fraud — became the single most predictive feature in the final model, more predictive than any individual transaction attribute.
+**Graph analysis changed the problem.** Mapping cards, devices, and email domains as a network made coordinated fraud rings visible. The fraud-neighbour ratio — what fraction of an entity's connections are confirmed fraud — became the single most predictive feature in the final model.
 
 **Every flag has a reason.** 118,108 validation transactions each received a plain-language explanation combining model contributions with network signals. CSV-ready for Tableau or any review queue tool.
 
@@ -95,13 +97,13 @@ Five production-style BigQuery queries:
 ## How to Run
 
 ```bash
-git clone https://github.com/animesh-501/fraud-risk-analytics
-cd fraud-risk-analytics
+git clone https://github.com/animesh-501/fraud-risk-prioritization-analytics
+cd fraud-risk-prioritization-analytics
 pip install pandas numpy matplotlib scikit-learn lightgbm networkx
-jupyter notebook Fraud_Risk_Analytics_Business_Narrative.ipynb
+jupyter notebook 00_master_business_walkthrough.ipynb
 ```
 
-> The business narrative notebook runs on **simulated data** mirroring real distributions — no download needed.
+> The business narrative notebook runs on **simulated data** — no download needed.
 > Technical notebooks use the [IEEE-CIS dataset (Kaggle)](https://www.kaggle.com/c/ieee-fraud-detection/data).
 
 ---
