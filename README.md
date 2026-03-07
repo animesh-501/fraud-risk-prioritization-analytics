@@ -1,39 +1,74 @@
 # Fraud Risk Prioritization & Operational Analytics
 
 **Animesh Choubey** | MSBA, Cal State East Bay
-
-`Python` `SQL / BigQuery` `LightGBM` `NetworkX` `pandas` `scikit-learn`
+Python · SQL / BigQuery · LightGBM · NetworkX · pandas · scikit-learn
 
 ---
+
+## Project Overview
+
+Built a fraud risk scoring system that prioritizes transaction review queues using cost-sensitive modeling and graph-based fraud ring detection. The project focuses on **operational decision-making**, not just model accuracy.
+
+---
+
+## ▶️ Start Here
 
 ## [Open the Business Narrative Notebook](./00_master_business_walkthrough.ipynb)
 
-*Start here. Full analytical story — problem, approach, fraud ring detection, SQL, cost model, and recommendation.*
+Full analytical story: problem framing, modeling, fraud ring detection, SQL workflows, cost model, and operational recommendation.
 
 ---
 
-## What This Project Is
+## Key Business Questions
 
-A fraud analytics project built on 590K real e-commerce transactions. The focus is on **analytical decision-making and operational usefulness** — not model complexity.
-
-Four questions a fraud operations team actually cares about:
-
-1. Can we score transactions by risk reliably enough to prioritize a review queue?
-2. Are fraudsters acting alone, or in coordinated rings sharing devices and cards?
-3. When a transaction is flagged, can we explain *why* in plain language?
-4. What does performance translate to in dollars — and at what threshold is it worth running?
+1. Can transactions be scored reliably enough to prioritize analyst review?
+2. Are fraudsters operating individually or in coordinated rings?
+3. Can each flagged transaction be explained in plain language?
+4. What model performance translates to in **dollars**, and where is the optimal threshold?
 
 ---
 
 ## Key Results
 
-| Metric | Baseline | Final | Target |
-|--------|----------|-------|--------|
-| PR-AUC | 0.27 | **0.40** | 0.42 |
-| Precision @ 2% review rate | -- | **53%** | 25% |
-| Recall @ threshold 0.10 | -- | **~58%** | 60% |
+| Metric                     | Baseline | Final    | Target |
+| -------------------------- | -------- | -------- | ------ |
+| PR-AUC                     | 0.27     | **0.40** | 0.42   |
+| Precision @ 2% review rate | —        | **53%**  | 25%    |
+| Recall @ threshold 0.10    | —        | **58%**  | 60%    |
 
-> At 50K transactions/month: **~$200K prevented monthly** vs ~$40K review ops cost — approximately **5x ROI**.
+---
+
+## Business Impact
+
+At ~50K transactions/month:
+
+* ~$200K estimated fraud prevented
+* ~$40K analyst review cost
+* **~5× operational ROI**
+
+---
+
+## Analytical Approach
+
+**Tabular signals plateaued.** After 5 feature engineering iterations, individual-transaction modeling plateaued at PR-AUC ≈ 0.40.
+
+**Graph analysis changed the signal.** Building a network of cards, devices, and email domains exposed coordinated fraud rings.
+The **fraud-neighbor ratio** became the single most predictive feature.
+
+**Operational explainability built in.**
+118K+ validation transactions received plain-language explanations combining model contributions + network signals, exportable for analyst queues.
+
+---
+
+## SQL Demonstrated
+
+Production-style BigQuery workflows:
+
+* Daily fraud ops monitoring dashboard query
+* Ranked analyst review queue
+* Precision by score band reporting
+* Card-level repeat exposure detection
+* Weekly fraud reason summaries
 
 ---
 
@@ -41,56 +76,28 @@ Four questions a fraud operations team actually cares about:
 
 ```
 fraud-risk-prioritization-analytics/
-|
-+-- README.md
-+-- 00_master_business_walkthrough.ipynb        <- Start here
-|
-+-- technical-notebooks/
-    +-- 01_EDA_and_Preprocessing.ipynb
-    +-- 02_Modeling_and_Evaluation.ipynb
-    +-- 03_Graph_Analysis_Fraud_Ring_Detection.ipynb
-    +-- 04_Explainability_Analyst_Reports.ipynb
-    +-- 05_Validation_Charts.ipynb
+│
+├── README.md
+├── 00_master_business_walkthrough.ipynb   ← Start here
+│
+├── technical-notebooks/
+│   ├── 01_EDA_and_Preprocessing.ipynb
+│   ├── 02_Modeling_and_Evaluation.ipynb
+│   ├── 03_Graph_Analysis_Fraud_Ring_Detection.ipynb
+│   ├── 04_Explainability_Analyst_Reports.ipynb
+│   └── 05_Validation_Charts.ipynb
 ```
 
 ---
 
-## What the Business Notebook Covers
+## Skills Demonstrated
 
-| # | Section | What It Shows |
-|---|---------|---------------|
-| 1 | Business Problem | Two-sided cost of fraud — missing fraud vs over-blocking |
-| 2 | The Data | 590K transactions, 3.5% fraud rate, why accuracy is the wrong metric |
-| 3 | Analytical Approach | LightGBM rationale, PR-AUC vs ROC-AUC, leakage-safe design |
-| 4 | Feature Engineering | What each layer added v1 to v5, where the tabular model plateaued |
-| 5 | Fraud Ring Detection | Entity graph, network visualisation, how rings become visible |
-| 6 | Results & Threshold | Performance charts, threshold selection as a business decision |
-| 7 | Analyst Outputs | Plain-language reason texts, flag priority tiers, case export |
-| 8 | SQL Analysis | 5 BigQuery queries — ops monitoring, review queue, ring detection |
-| 9 | Cost Model | Fraud in dollars, ROI on review ops, optimal threshold curve |
-| 10 | Recommendation | What I would actually tell the fraud ops team to do |
-
----
-
-## SQL Demonstrated
-
-Five production-style BigQuery queries:
-
-- Daily ops monitoring — did flag volume spike overnight?
-- Analyst review queue — ranked, priority-tiered, ready to work
-- Precision by score band — stakeholder-readable performance table
-- Card-level repeat exposure — ring detection without a graph database
-- Weekly reason summary — what types of fraud are being caught?
-
----
-
-## Analytical Approach — In Brief
-
-**Individual signals hit a ceiling.** After iterative feature engineering across 5 model versions, the tabular model plateaued at PR-AUC ~0.40. More individual-transaction features produced diminishing returns.
-
-**Graph analysis changed the problem.** Mapping cards, devices, and email domains as a network made coordinated fraud rings visible. The fraud-neighbour ratio — what fraction of an entity's connections are confirmed fraud — became the single most predictive feature in the final model.
-
-**Every flag has a reason.** 118,108 validation transactions each received a plain-language explanation combining model contributions with network signals. CSV-ready for Tableau or any review queue tool.
+* Fraud risk modeling
+* Cost-sensitive threshold optimization
+* Graph/network fraud detection
+* SQL for operational analytics
+* Explainable ML for analyst workflows
+* Business impact translation (ROI, cost curves)
 
 ---
 
@@ -103,9 +110,9 @@ pip install pandas numpy matplotlib scikit-learn lightgbm networkx
 jupyter notebook 00_master_business_walkthrough.ipynb
 ```
 
-> The business narrative notebook runs on **simulated data** — no download needed.
-> Technical notebooks use the [IEEE-CIS dataset (Kaggle)](https://www.kaggle.com/c/ieee-fraud-detection/data).
+* Business notebook runs on **simulated data**
+* Technical notebooks use the **IEEE-CIS Fraud Detection dataset (Kaggle)**
 
 ---
 
-*MSBA Capstone — California State University East Bay, 2025*
+MSBA Capstone — California State University East Bay (2025)
