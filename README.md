@@ -37,6 +37,22 @@ Tabular features plateaued at PR-AUC 0.40 after 5 engineering iterations.
 
 Graph analysis broke through. By building a network of shared cards, devices, and email domains across transactions, fraud rings became visible. The **fraud-neighbor ratio** — what fraction of a node's connections are confirmed fraud — became the single most predictive feature.
 
+As fraud-neighbor ratio increases from 0.05 → 0.20+, fraud rate jumps from 8% to 40%:
+
+![Fraud Rate by Neighbor Ratio](./v3_valid_fraud_rate_by_fraud_ratio.png)
+
+---
+
+## Model Output
+
+**Precision-Recall Curve (AP = 0.368)**
+
+![PR Curve](./plot_pr_curve.png)
+
+**Top Explanation Reasons across 118K+ flagged transactions**
+
+![Top Reasons](./plot_top_reasons.png)
+
 ---
 
 ## Start Here
@@ -102,5 +118,5 @@ The business notebook runs on simulated data. Technical notebooks use the IEEE-C
 
 ---
 
-MSBA Capstone — California State University East Bay · 2026  
+Capstone — California State University East Bay · 2026  
 [linkedin.com/in/choubey-animesh](https://linkedin.com/in/choubey-animesh) · [animesh-501.github.io](https://animesh-501.github.io)
